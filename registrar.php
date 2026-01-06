@@ -1,51 +1,3 @@
-<?php
-$conn = mysqli_connect("localhost", "root", "admin123", "Student_Management_DB");
-
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
-if (isset($_POST['enroll'])) {
-    if (
-        $_POST['student_number'] == '' ||
-        $_POST['first_name'] == '' ||
-        $_POST['last_name'] == '' ||
-        $_POST['gender'] == '' ||
-        $_POST['department'] == '' ||
-        $_POST['year_level'] == ''
-    ) {
-        echo "Fields must not be null";
-
-    } 
-    else if ($_POST['year_level'] < 1 || $_POST['year_level'] > 5) {
-        echo "Year Level must be between 1 and 5";
-
-    } 
-    else {
-
-        $sql = "INSERT INTO Student
-                (StudentNumber, FirstName, LastName, Gender, Department, YearLevel, AcademicStanding, Status)
-                VALUES
-                ('$_POST[student_number]',
-                 '$_POST[first_name]',
-                 '$_POST[last_name]',
-                 '$_POST[gender]',
-                 '$_POST[department]',
-                 '$_POST[year_level]',
-                 '$_POST[academic_standing]',
-                 '$_POST[status]')";
-
-        $result = mysqli_query($conn, $sql);
-
-        if ($result) {
-            echo "Student successfully enrolled";
-        } else {
-            echo "Error: Student already exists";
-        }
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -257,19 +209,19 @@ if (isset($_POST['enroll'])) {
 
     <div class="container">
         <h1>Registrar Section</h1>
+        <form method="POST">
+            <div class="form-box">
+                <div class="trash">🗑</div>
 
-        <div class="form-box">
-            <div class="trash">🗑</div>
+                <div class="form-title">
+                    <h2>Enroll Student</h2>
+                    <p>Fill up the form</p>
+                </div>
 
-            <div class="form-title">
-                <h2>Enroll Student</h2>
-                <p>Fill up the form</p>
-            </div>
-
-            <hr>
+                <hr>
 
 
-            <form method="POST">
+
                 <div class="form-grid">
 
                     <div class="field">
@@ -317,27 +269,104 @@ if (isset($_POST['enroll'])) {
                         <input type="text" name="academic_standing">
                     </div>
                 </div>
-            </form>
 
-        </div>
-
-        <div class="buttons">
-            <div class="left-buttons">
-                <button type="submit" name="enroll" class="enroll">Add Student</button>
-                <button class="view">View Student</button>
-                <button class="view">View Grades</button>
-                <button class="view">View Faculty</button>
             </div>
 
-            <div class="right-buttons">
-                
-                <button class="view">View Course</button>
-                <button class="view">View Enrollments</button>
-                <button class="view">View Students Performance</button>
+            <div class="buttons">
+                <div class="left-buttons">
+                    <button type="submit" name="enroll" class="enroll">Add Student</button>
+                    <button class="view">View Student</button>
+                    <button class="view">View Grades</button>
+                    <button class="view">View Faculty</button>
+                </div>
+
+                <div class="right-buttons">
+
+                    <button class="view">View Course</button>
+                    <button type="submit" name="viewenroll" class="viewenroll">View Enrollments</button>
+                    <button class="view">View Students Performance</button>
+                </div>
             </div>
-        </div>
+        </form>
+
     </div>
 
+
+    <?php
+    $conn = mysqli_connect("localhost", "root", "", "Student_Management_DB");
+    // paiba nalang ng values ng connection if iba senyo
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    if (isset($_POST['enroll'])) {
+        if (
+            $_POST['student_number'] == '' ||
+            $_POST['first_name'] == '' ||
+            $_POST['last_name'] == '' ||
+            $_POST['gender'] == '' ||
+            $_POST['department'] == '' ||
+            $_POST['year_level'] == ''
+        ) {
+            echo "Fields must not be null";
+
+        } else if ($_POST['year_level'] < 1 || $_POST['year_level'] > 5) {
+            echo "Year Level must be between 1 and 5";
+
+        } else {
+
+            $sql = "INSERT INTO Student
+                (StudentNumber, FirstName, LastName, Gender, Department, YearLevel, AcademicStanding, Status)
+                VALUES
+                ('$_POST[student_number]',
+                 '$_POST[first_name]',
+                 '$_POST[last_name]',
+                 '$_POST[gender]',
+                 '$_POST[department]',
+                 '$_POST[year_level]',
+                 '$_POST[academic_standing]',
+                 '$_POST[status]')";
+
+            $result = mysqli_query($conn, $sql);
+
+            if ($result) {
+                echo "Student successfully enrolled";
+            } else {
+                echo "Error: Student already exists";
+            }
+        }
+    }
+
+    if (isset($_POST['viewenroll'])) {
+        $sql = "SELECT * FROM enrollment";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            echo "<hr><table cellspacing='3' cellpadding='5' border='1' align='center'>
+            <tr>
+                <th>Enrollment ID</th>
+                <th>Student ID</th>
+                <th>Course ID</th>
+                <th>Enrollment Date</th>
+                <th>Status</th>
+            </tr>";
+
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>
+                <td>" . $row['EnrollmentID'] . "</td>
+                <td>" . $row['StudentID'] . "</td>
+                <td>" . $row['CourseID'] . "</td>
+                <td>" . $row['EnrollmentDate'] . "</td>
+                <td>" . $row['Status'] . "</td>
+              </tr>";
+            }
+
+            echo "</table>";
+        } else {
+            echo "No Records Found";
+        }
+    }
+    ?>
 </body>
 
 </html>

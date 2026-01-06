@@ -209,10 +209,7 @@ if (isset($_POST['login'])) {
                 <img class="user-icon" src="Assets/registrar.png" alt="Student Icon">
 
                 <h1>Universal University</h1>
-                <p>Sign in to start</p>
-
-                <input type="text" placeholder="Registrar ID Number">
-                <button>Sign In</button>
+                
             </div>
 
             <form method="post">
