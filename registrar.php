@@ -276,15 +276,15 @@
                 <div class="left-buttons">
                     <button type="submit" name="enroll" class="enroll">Add Student</button>
                     <button class="view">View Student</button>
-                    <button class="view">View Grades</button>
+                    <button type="submit" name="viewgrades" class="view">View Grades</button>
                     <button class="view">View Faculty</button>
                 </div>
 
                 <div class="right-buttons">
 
-                    <button class="view">View Course</button>
-                    <button type="submit" name="viewenroll" class="viewenroll">View Enrollments</button>
-                    <button class="view">View Students Performance</button>
+                    <button type="submit" name="viewcourse" class="view">View Course</button>
+                    <button type="submit" name="viewenroll" class="view">View Enrollments</button>
+                    <button type="submit" name="viewstudentperformance" class="view">View Students Performance</button>
                 </div>
             </div>
         </form>
@@ -342,7 +342,13 @@
         $result = mysqli_query($conn, $sql);
 
         if (mysqli_num_rows($result) > 0) {
-            echo "<hr><table cellspacing='3' cellpadding='5' border='1' align='center'>
+            echo "
+            <br>
+            <div style='width:90%; margin:20px auto; text-align:center;'>
+                <h2 style='margin-bottom:10px;'>Enrollment</h2>
+                <hr style='height:4px; background-color:#000; border:none; margin-bottom:20px;'>
+            </div>
+            <table cellspacing='3' cellpadding='5' border='1' align='center'>
             <tr>
                 <th>Enrollment ID</th>
                 <th>Student ID</th>
@@ -364,6 +370,125 @@
             echo "</table>";
         } else {
             echo "No Records Found";
+        }
+    }
+
+    if (isset($_POST['viewstudentperformance'])) {
+        $sql = "SELECT * FROM vw_student_performance";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            echo " 
+            <br>
+            <div style='width:90%; margin:20px auto; text-align:center;'>
+                <h2 style='margin-bottom:10px;'>Student Performance</h2>
+                <hr style='height:4px; background-color:#000; border:none; margin-bottom:20px;'>
+            </div>
+        
+            <table cellspacing='3' cellpadding='5' border='1' align='center'>
+        <tr>
+            <th>Student Number</th>
+            <th>Student Name</th>
+            <th>Course Code</th>
+            <th>Course Name</th>
+            <th>Midterm Grade</th>
+            <th>Final Grade</th>
+            <th>Enrollment Status</th>
+        </tr>";
+
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>
+            <td>" . $row['StudentNumber'] . "</td>
+            <td>" . $row['StudentName'] . "</td>
+            <td>" . $row['CourseCode'] . "</td>
+            <td>" . $row['CourseName'] . "</td>
+            <td>" . ($row['MidtermGrade'] ?? 'N/A') . "</td>
+            <td>" . ($row['FinalGrade'] ?? 'N/A') . "</td>
+            <td>" . $row['EnrollmentStatus'] . "</td>
+          </tr>";
+            }
+
+            echo "</table>";
+        } else {
+            echo "No Records Found";
+        }
+    }
+
+    if (isset($_POST['viewcourse'])) {
+        $sql = "SELECT * FROM course";
+        $result = mysqli_query($conn, $sql);
+
+        if ($result->num_rows > 0) {
+            echo "
+            <br>
+            <div style='width:90%; margin:20px auto; text-align:center;'>
+                <h2 style='margin-bottom:10px;'>Course</h2>
+                <hr style='height:4px; background-color:#000; border:none; margin-bottom:20px;'>
+            </div>
+            <table cellspacing='3' cellpadding='5' border='1' align='center'>
+            <tr>
+                <th>Course ID</th>
+                <th>Course Code</th>
+                <th>Course Name</th>
+                <th>Department</th>
+                <th>Faculty</th>
+                <th>Semester</th>
+                <th>Academic Year</th>
+                <th>Max Capacity</th>
+                <th>Status</th>
+            </tr>";
+
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>
+                <td>" . $row['CourseID'] . "</td>
+                <td>" . $row['CourseCode'] . "</td>
+                <td>" . $row['CourseName'] . "</td>
+                <td>" . $row['Department'] . "</td>
+                <td>" . $row['FacultyID'] . "</td>
+                <td>" . $row['Semester'] . "</td>
+                <td>" . $row['AcademicYear'] . "</td>
+                <td>" . $row['MaxCapacity'] . "</td>
+                <td>" . $row['Status'] . "</td>
+              </tr>";
+            }
+
+            echo "</table>";
+        } else {
+            echo "No courses found.";
+        }
+    }
+
+    if (isset($_POST['viewgrades'])) {
+        $sql = "SELECT * FROM grades";
+        $result = mysqli_query($conn, $sql);
+
+        if ($result->num_rows > 0) {
+            echo "
+            <br>
+            <div style='width:90%; margin:20px auto; text-align:center;'>
+                <h2 style='margin-bottom:10px;'>Grades</h2>
+                <hr style='height:4px; background-color:#000; border:none; margin-bottom:20px;'>
+            </div>
+            <table cellspacing='3' cellpadding='5' border='1' align='center'>
+            <tr>
+                <th>Grade ID</th>
+                <th>Enrollment ID</th>
+                <th>Midterm Grade</th>
+                <th>Final Grade</th>
+            </tr>";
+
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>
+                <td>" . $row['GradeID'] . "</td>
+                <td>" . $row['EnrollmentID'] . "</td>
+                <td>" . $row['MidtermGrade'] . "</td>
+                <td>" . $row['FinalGrade'] . "</td>
+              </tr>";
+            }
+
+            echo "</table>";
+        } else {
+            echo "No courses found.";
         }
     }
     ?>
