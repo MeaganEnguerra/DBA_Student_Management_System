@@ -276,9 +276,9 @@
             <div class="buttons">
                 <div class="left-buttons">
                     <button type="submit" name="enroll" class="enroll">Add Student</button>
-                    <button class="view">View Student</button>
+                    <button type="submit" name="viewStudent" class="view">View Student</button>
                     <button type="submit" name="viewgrades" class="view">View Grades</button>
-                    <button class="view">View Faculty</button>
+                    <button type="submit" name="viewFaculty" class="view">View Faculty</button>
                 </div>
 
                 <div class="right-buttons">
@@ -370,6 +370,86 @@
             echo "</table>";
         } else {
             echo "No Records Found";
+        }
+    }
+
+     if (isset($_POST['viewStudent'])) {
+    $sql = "SELECT * FROM student";
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($result) > 0) {
+
+        echo " <br>
+        <div style='width:90%; margin:20px auto; text-align:center;'>
+            <h2 style='margin-bottom:10px;'>Student Information</h2>
+            <hr style='height:4px; background-color:#000; border:none; margin-bottom:20px;'>
+        </div>
+
+        <table cellspacing='3' cellpadding='5' border='1' align='center' width='90%'>
+            <tr>
+                <th>Student ID</th>
+                <th>Student Number</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <th>Department</th>
+                <th>Year Level</th>
+                <th>Academic Standing</th>
+                <th>Status</th>
+            </tr>";
+
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>
+                <td>{$row['StudentID']}</td>
+                <td>{$row['StudentNumber']}</td>
+                <td>{$row['FirstName']}</td>
+                <td>{$row['LastName']}</td>
+                <td>{$row['Gender']}</td>
+                <td>{$row['Department']}</td>
+                <td>{$row['YearLevel']}</td>
+                <td>{$row['AcademicStanding']}</td>
+                <td>{$row['Status']}</td>
+            </tr>";
+        }
+
+        echo "</table>";
+    } else {
+        echo "<p style='text-align:center;'>No Records Found</p>";
+    }
+}
+
+
+    if (isset($_POST['viewFaculty'])) {
+        $sql = "SELECT * FROM faculty";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            echo " <br>
+        <div style='width:90%; margin:20px auto; text-align:center;'>
+            <h2 style='margin-bottom:10px;'>Faculty Information</h2>
+            <hr style='height:4px; background-color:#000; border:none; margin-bottom:20px;'>
+        </div><table cellspacing='3' cellpadding='5' border='1' align='center'>
+            <tr>
+                <th>Faculty ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Department</th>
+                <th>Status</th>
+            </tr>";
+
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>
+                <td>" . $row['FacultyID'] . "</td>
+                <td>" . $row['FirstName'] . "</td>
+                <td>" . $row['LastName'] . "</td>
+                <td>" . $row['Department'] . "</td>
+                <td>" . $row['Status'] . "</td>
+              </tr>";
+            }
+
+            echo "</table>";
+        } else {
+            echo "<p style='text-align:center;'>No Records Found</p>";
         }
     }
 
