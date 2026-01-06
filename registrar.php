@@ -1,5 +1,5 @@
 <?php
-$conn = mysqli_connect("localhost", "root", "", "Student_Management_DB");
+$conn = mysqli_connect("localhost", "root", "admin123", "Student_Management_DB");
 
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
@@ -183,7 +183,7 @@ if (isset($_POST['enroll'])) {
         .view {
             background: #5a2a00;
             width: 150px;
-            height: 40px;
+            height: 45px;
         }
 
 
@@ -200,7 +200,7 @@ if (isset($_POST['enroll'])) {
         .enroll {
             background: #0b7d3e;
             width: 150px;
-            height: 40px;
+            height: 45px;
         }
 
         .drop {
@@ -273,7 +273,7 @@ if (isset($_POST['enroll'])) {
                 <div class="form-grid">
 
                     <div class="field">
-                        <label>Student ID:</label>
+                        <label>Student Number:</label>
                         <input type="text" name="student_number">
                     </div>
 
@@ -323,16 +323,17 @@ if (isset($_POST['enroll'])) {
 
         <div class="buttons">
             <div class="left-buttons">
-                <button type="submit" name="enroll" class="enroll">Enroll</button>
-                <button class="drop">Drop</button>
-                <button class="update">Update</button>
+                <button type="submit" name="enroll" class="enroll">Add Student</button>
+                <button class="view">View Student</button>
+                <button class="view">View Grades</button>
+                <button class="view">View Faculty</button>
             </div>
 
             <div class="right-buttons">
-                <button class="view">Create Schedule</button>
-                <button class="view">View Schedule</button>
-                <button class="view">View Student</button>
-                <button class="view">View Grades</button>
+                
+                <button class="view">View Course</button>
+                <button class="view">View Enrollments</button>
+                <button class="view">View Students Performance</button>
             </div>
         </div>
     </div>
