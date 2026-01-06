@@ -251,7 +251,7 @@
 
                     <div class="field">
                         <label>Status:</label>
-                            <select name="status" required>
+                            <select name="status">
                             <option value="">Select Status</option>
                             <option value="Active">Active</option>
                             <option value="Inactive">Inactive</option>
@@ -291,8 +291,6 @@
         </form>
 
     </div>
-    </form>
-
 
     <?php
     $conn = mysqli_connect("localhost", "root", "", "Student_Management_DB");
