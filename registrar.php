@@ -251,13 +251,14 @@
 
                     <div class="field">
                         <label>Status:</label>
-                        <select>
+                            <select name="status" required>
                             <option value="">Select Status</option>
                             <option value="Active">Active</option>
                             <option value="Inactive">Inactive</option>
                             <option value="Graduated">Graduated</option>
-                        </select>
+                            </select>
                     </div>
+
 
                     <div class="field">
                         <label>Gender:</label>
@@ -290,6 +291,7 @@
         </form>
 
     </div>
+    </form>
 
 
     <?php
