@@ -48,22 +48,6 @@
             position: relative;
         }
 
-
-        .trash {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #4b2b1a;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-
         .form-title {
             text-align: center;
         }
@@ -204,23 +188,20 @@
 <body>
 
     <div class="top-bar">
-        <img src="Assets/admin.png" alt="Profile">
+        
     </div>
 
     <div class="container">
         <h1>Registrar Section</h1>
         <form method="POST">
             <div class="form-box">
-                <div class="trash">🗑</div>
-
+                
                 <div class="form-title">
                     <h2>Enroll Student</h2>
                     <p>Fill up the form</p>
                 </div>
 
                 <hr>
-
-
 
                 <div class="form-grid">
 
